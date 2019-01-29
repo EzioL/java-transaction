@@ -12,17 +12,16 @@ import java.sql.SQLException;
  */
 public class FailureWithdrawDao {
 
-    ComboPooledDataSource dataSource;
+    private ComboPooledDataSource dataSource;
 
-    public FailureWithdrawDao(ComboPooledDataSource dataSource) {
+    FailureWithdrawDao(ComboPooledDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public void withdraw(int bankId, BigDecimal amount) throws SQLException {
+    void withdraw(int bankId, BigDecimal amount) throws SQLException {
         Connection connection = dataSource.getConnection();
-
-        PreparedStatement selectStatement = connection.prepareStatement("SELECT AMOUNT "
-            + "FROM BANK_ACCOUNT WHERE BANK_ID = ?");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT amount "
+            + "FROM d_bank.t_bank WHERE bankId = ?");
         selectStatement.setInt(1, bankId);
         ResultSet resultSet = selectStatement.executeQuery();
         resultSet.next();
@@ -30,8 +29,9 @@ public class FailureWithdrawDao {
         resultSet.close();
         selectStatement.close();
 
-        BigDecimal newAmount = previousAmount.add(amount);
-        PreparedStatement updateStatement = connection.prepareStatement("UPDATE BANK_ACCOUNT SET BANK_AMOUNT = ? WHERE BANK_ID = ?");
+        BigDecimal newAmount = previousAmount.subtract(amount);
+        PreparedStatement updateStatement = connection.
+            prepareStatement("UPDATE d_bank.t_bank SET amount = ? WHERE bankId = ?");
         updateStatement.setBigDecimal(1, newAmount);
         updateStatement.setInt(2, bankId);
         updateStatement.execute();

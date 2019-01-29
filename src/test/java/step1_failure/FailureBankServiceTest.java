@@ -25,15 +25,25 @@ public class FailureBankServiceTest extends TestRunner {
         System.err.println(bigDecimal);
     }
 
-    public void test_success() {
+    @Test
+    public void test_success() throws SQLException {
+
+        helper = new BankQueryHelper(DataSourceFactory.createDataSource());
         bankService = new FailureBankService(DataSourceFactory.createDataSource());
         bankService.transfer(1, 2, new BigDecimal("200"));
+
+        System.err.println("bank 1 " + helper.queryAmount(1));
+        System.err.println("bank 2 " + helper.queryAmount(2));
     }
 
-    public void test_fail() {
+    @Test
+    public void test_fail() throws SQLException {
 
         int toNonExistId = -1;
         bankService = new FailureBankService(DataSourceFactory.createDataSource());
         bankService.transfer(1, toNonExistId, new BigDecimal("200"));
+
+        System.err.println("bank 1 " + helper.queryAmount(1));
+        System.err.println("bank 2 " + helper.queryAmount(toNonExistId));
     }
 }

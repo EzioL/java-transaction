@@ -12,17 +12,17 @@ import java.sql.SQLException;
  */
 public class FailureRechargeDao {
 
-    ComboPooledDataSource dataSource;
+    private ComboPooledDataSource dataSource;
 
-    public FailureRechargeDao(ComboPooledDataSource dataSource) {
+    FailureRechargeDao(ComboPooledDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public void recharge(int bankId, BigDecimal amount) throws SQLException {
+    void recharge(int bankId, BigDecimal amount) throws SQLException {
         Connection connection = dataSource.getConnection();
 
-        PreparedStatement selectStatement = connection.prepareStatement("SELECT BANK_AMOUNT "
-            + "FROM BANK_ACCOUNT WHERE BANK_ID = ?");
+        PreparedStatement selectStatement = connection.prepareStatement("SELECT amount "
+            + "FROM d_bank.t_bank WHERE bankId = ?");
         selectStatement.setInt(1, bankId);
         ResultSet resultSet = selectStatement.executeQuery();
         resultSet.next();
@@ -30,8 +30,8 @@ public class FailureRechargeDao {
         resultSet.close();
         selectStatement.close();
 
-        BigDecimal newAmount = previousAmount.subtract(amount);
-        PreparedStatement updateStatement = connection.prepareStatement("UPDATE BANK_ACCOUNT SET BANK_AMOUNT = ? WHERE BANK_ID = ?");
+        BigDecimal newAmount = previousAmount.add(amount);
+        PreparedStatement updateStatement = connection.prepareStatement("UPDATE t_bank SET amount = ? WHERE bankId = ?");
         updateStatement.setBigDecimal(1, newAmount);
         updateStatement.setInt(2, bankId);
         updateStatement.execute();

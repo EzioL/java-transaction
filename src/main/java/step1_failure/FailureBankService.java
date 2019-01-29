@@ -30,7 +30,9 @@ public class FailureBankService implements BankService {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
 
+            // 提现
             withdrawDao.withdraw(fromBankId, amount);
+            // 充值
             rechargeDao.recharge(toBankId, amount);
 
             connection.commit();
