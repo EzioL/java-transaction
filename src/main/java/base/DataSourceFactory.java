@@ -1,28 +1,24 @@
 package base;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import java.beans.PropertyVetoException;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
  * Here be dragons Created by @author Ezio on 2019-01-28 16:59
  */
 public class DataSourceFactory {
 
-    private static final ComboPooledDataSource dataSource = new ComboPooledDataSource();
+    private static final MysqlDataSource dataSource = new MysqlDataSource();
 
     static {
 
-        try {
-            dataSource.setDriverClass("com.mysql.jdbc.Driver");
-        } catch (PropertyVetoException e) {
-            e.printStackTrace();
-        }
-        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/d_bank");
+        //dataSource.setDatabaseName("d_bank");
+        //dataSource.setPort(3306);
         dataSource.setUser("root");
         dataSource.setPassword("123456");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/d_bank?useSSL=false");
     }
 
-    public static ComboPooledDataSource createDataSource() {
+    public static MysqlDataSource createDataSource() {
         return dataSource;
     }
 }
