@@ -1,7 +1,7 @@
 package step1_failure;
 
 import base.BankService;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,13 +11,13 @@ import java.sql.SQLException;
  */
 public class FailureBankService implements BankService {
 
-    private ComboPooledDataSource dataSource;
+    private MysqlDataSource dataSource;
 
     private FailureRechargeDao rechargeDao;
 
     private FailureWithdrawDao withdrawDao;
 
-    public FailureBankService(ComboPooledDataSource dataSource) {
+    public FailureBankService(MysqlDataSource dataSource) {
 
         this.dataSource = dataSource;
         this.rechargeDao = new FailureRechargeDao(dataSource);

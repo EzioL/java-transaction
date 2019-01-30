@@ -1,6 +1,6 @@
 package base;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,9 +13,9 @@ import java.sql.SQLException;
 
 public class BankQueryHelper {
 
-    ComboPooledDataSource dataSource;
+    MysqlDataSource dataSource;
 
-    public BankQueryHelper(ComboPooledDataSource dataSource) {
+    public BankQueryHelper(MysqlDataSource dataSource) {
         this.dataSource = dataSource;
     }
 

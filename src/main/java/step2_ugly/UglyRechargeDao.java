@@ -1,6 +1,5 @@
-package step1_failure;
+package step2_ugly;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,16 +9,9 @@ import java.sql.SQLException;
 /**
  * Here be dragons Created by @author Ezio on 2019-01-28 16:51
  */
-public class FailureRechargeDao {
+public class UglyRechargeDao {
 
-    private MysqlDataSource dataSource;
-
-    FailureRechargeDao(MysqlDataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    void recharge(int bankId, BigDecimal amount) throws SQLException {
-        Connection connection = dataSource.getConnection();
+    void recharge(int bankId, BigDecimal amount, Connection connection) throws SQLException {
 
         PreparedStatement selectStatement = connection.prepareStatement("SELECT amount "
             + "FROM d_bank.t_bank WHERE bankId = ?");
@@ -36,7 +28,5 @@ public class FailureRechargeDao {
         updateStatement.setInt(2, bankId);
         updateStatement.execute();
         updateStatement.close();
-
-        connection.close();
     }
 }

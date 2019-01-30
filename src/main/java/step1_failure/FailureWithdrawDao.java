@@ -1,6 +1,6 @@
 package step1_failure;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,9 +12,9 @@ import java.sql.SQLException;
  */
 public class FailureWithdrawDao {
 
-    private ComboPooledDataSource dataSource;
+    private MysqlDataSource dataSource;
 
-    FailureWithdrawDao(ComboPooledDataSource dataSource) {
+    FailureWithdrawDao(MysqlDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
