@@ -18,7 +18,7 @@ public class ConnectionHolderRechargeDao {
         this.dataSource = dataSource;
     }
 
-    void recharge(int bankId, BigDecimal amount) throws SQLException {
+    public void recharge(int bankId, BigDecimal amount) throws SQLException {
         Connection connection = SingleThreadConnectionHolder.getConnection(dataSource);
 
         PreparedStatement selectStatement = connection.prepareStatement("SELECT amount "

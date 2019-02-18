@@ -11,21 +11,21 @@ public class TransactionManager {
 
     private MysqlDataSource dataSource;
 
-    TransactionManager(MysqlDataSource dataSource) {
+    public TransactionManager(MysqlDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    final void start() throws SQLException {
+    public final void start() throws SQLException {
         Connection connection = getConnection();
         connection.setAutoCommit(false);
     }
 
-    final void commit() throws SQLException {
+    public final void commit() throws SQLException {
         Connection connection = getConnection();
         connection.commit();
     }
 
-    final void rollback() {
+    public final void rollback() {
         Connection connection = null;
         try {
             connection = getConnection();

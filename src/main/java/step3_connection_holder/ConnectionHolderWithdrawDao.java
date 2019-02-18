@@ -18,7 +18,7 @@ public class ConnectionHolderWithdrawDao {
         this.dataSource = dataSource;
     }
 
-    void withdraw(int bankId, BigDecimal amount) throws SQLException {
+    public void withdraw(int bankId, BigDecimal amount) throws SQLException {
 
         Connection connection = SingleThreadConnectionHolder.getConnection(dataSource);
 
