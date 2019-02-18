@@ -21,7 +21,7 @@ public class UglyBankService implements BankService {
         withdrawDao = new UglyWithdrawDao();
     }
 
-    public void transfer(int fromId, int toId, BigDecimal amount) {
+    @Override public void transfer(int fromId, int toId, BigDecimal amount) {
         Connection connection = null;
 
         try {
